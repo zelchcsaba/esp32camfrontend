@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const JoystickControl = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const joystickInstanceRef = useRef<any>(null);
@@ -33,13 +35,13 @@ const JoystickControl = () => {
       const y = parseFloat((data.vector.y || 0).toFixed(2));
 
       axios
-        .post('http://192.168.0.104:3000/control', { x, y })
+        .post(`${apiUrl}/control`, { x, y })
         .catch((err) => console.error('Hiba a küldésnél:', err.message));
     });
 
     joystick.on('end', () => {
       axios
-        .post('http://192.168.0.104:3000/control', { x: 0, y: 0 })
+        .post(`${apiUrl}/control`, { x: 0, y: 0 })
         .catch((err) => console.error('Hiba a nullázásnál:', err.message));
     });
 

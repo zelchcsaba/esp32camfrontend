@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io('http://192.168.0.104:3000', {
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const socket = io(apiUrl, {
   transports: ['websocket'],
 });
 

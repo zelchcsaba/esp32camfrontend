@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const JoystickTwo = () => {
   const joystickRef1 = useRef<HTMLDivElement>(null);
   const joystickRef2 = useRef<HTMLDivElement>(null);
@@ -36,7 +38,7 @@ const JoystickTwo = () => {
         if (!data?.vector) return;
         coords.current.y = parseFloat((data.vector.y || 0).toFixed(2));
         axios
-          .post('http://192.168.0.104:3000/control', {
+          .post(`${apiUrl}/control`, {
             x: coords.current.x,
             y: coords.current.y,
           })
@@ -46,7 +48,7 @@ const JoystickTwo = () => {
       joystick1.on('end', () => {
         coords.current.y = 0;
         axios
-          .post('http://192.168.0.104:3000/control', {
+          .post(`${apiUrl}/control`, {
             x: coords.current.x,
             y: coords.current.y,
           })
@@ -69,7 +71,7 @@ const JoystickTwo = () => {
         if (!data?.vector) return;
         coords.current.x = parseFloat((data.vector.x || 0).toFixed(2));
         axios
-          .post('http://192.168.0.104:3000/control', {
+          .post(`${apiUrl}/control`, {
             x: coords.current.x,
             y: coords.current.y,
           })
@@ -79,7 +81,7 @@ const JoystickTwo = () => {
       joystick2.on('end', () => {
         coords.current.x = 0;
         axios
-          .post('http://192.168.0.104:3000/control', {
+          .post(`${apiUrl}/control`, {
             x: coords.current.x,
             y: coords.current.y,
           })
