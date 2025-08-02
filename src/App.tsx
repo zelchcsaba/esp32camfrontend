@@ -1,0 +1,64 @@
+import { useEffect, useState } from 'react';
+import ImageStream from './components/ImageStream';
+import JoystickControl from './components/JoystickControl';
+import JoysticTwo from './components/JoystickTwo';
+import ImageStreamHalf from './components/ImageStreamHalf';
+import ImageStreamUp from './components/ImageStreamUp';
+import JoystickDown from './components/JoystickDown';
+
+function App() {
+  const [isLandscape, setIsLandscape] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const checkOrientation = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    setIsLandscape(width > height);
+    setIsMobile(width < 1024); // pl. mobilnak tekintjük, ha kisebb mint laptop screen
+  };
+
+  useEffect(() => {
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+    return () => {
+      window.removeEventListener("resize", checkOrientation);
+      window.removeEventListener("orientationchange", checkOrientation);
+    };
+  }, []);
+  
+let content;
+if (isMobile && isLandscape) {
+  // Mobil + fekvő mód: videó + joystick oldalra
+  content = (
+    <div className="flex w-screen h-screen overflow-hidden bg-gray-800">
+      <ImageStream />
+      <JoysticTwo />
+    </div>
+  );
+} else if (!isMobile && isLandscape) {
+  // Asztali + fekvő mód: csak joystick
+  content = (
+    <div className="flex w-screen h-screen overflow-hidden bg-gray-800">
+      <JoystickControl />
+      <ImageStreamHalf />
+    </div>
+  );
+} else {
+  // Minden más esetben (pl. mobil portré, asztali álló): videó + joystick alul
+  content = (
+    <div className="flex w-screen h-screen overflow-hidden bg-gray-800 flex-col">
+      <ImageStreamUp />
+      <JoystickDown />
+    </div>
+  );
+}
+
+return (
+  <body className="w-screen h-screen bg-gray-800 text-white">
+    {content}
+  </body>
+);
+}
+
+export default App
