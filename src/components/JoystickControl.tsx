@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
 import { useWS } from '../WsContext'; // a helyes útvonal
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const JoystickControl = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const joystickInstanceRef = useRef<any>(null);
@@ -32,11 +34,23 @@ const JoystickControl = () => {
       const x = parseFloat((data.vector.x || 0).toFixed(2));
       const y = parseFloat((data.vector.y || 0).toFixed(2));
 
+<<<<<<< HEAD
       sendMessage({ x, y });
     });
 
     joystick.on('end', () => {
       sendMessage({ x: 0, y: 0 });
+=======
+      axios
+        .post(`${apiUrl}/control`, { x, y })
+        .catch((err) => console.error('Hiba a küldésnél:', err.message));
+    });
+
+    joystick.on('end', () => {
+      axios
+        .post(`${apiUrl}/control`, { x: 0, y: 0 })
+        .catch((err) => console.error('Hiba a nullázásnál:', err.message));
+>>>>>>> master
     });
 
     joystickInstanceRef.current = joystick;
