@@ -1,24 +1,23 @@
 import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
-import axios from 'axios';
+import { useWS } from '../WsContext'; // A pontos elérési út legyen helyes nálad
 
 const JoystickDown = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const joystickInstanceRef = useRef<any>(null);
+  const { sendMessage } = useWS();
 
   const createJoystick = () => {
     if (!joystickRef.current) return;
 
-    // Előző joystick eltávolítása
     if (joystickInstanceRef.current) {
       joystickInstanceRef.current.destroy();
       joystickInstanceRef.current = null;
     }
 
     const screenHeight = window.innerHeight;
-    const joystickSize = screenHeight * 0.32; // max 200px vagy a képernyő 25%-a
+    const joystickSize = screenHeight * 0.32;
 
-    // Új joystick létrehozása
     const joystick = nipplejs.create({
       zone: joystickRef.current,
       mode: 'static',
@@ -32,13 +31,11 @@ const JoystickDown = () => {
       const x = parseFloat((data.vector.x || 0).toFixed(2));
       const y = parseFloat((data.vector.y || 0).toFixed(2));
 
-      axios.post('http://192.168.0.104:3000/control', { x, y })
-        .catch((err) => console.error('Hiba a küldésnél:', err.message));
+      sendMessage({ x, y });
     });
 
     joystick.on('end', () => {
-      axios.post('http://192.168.0.104:3000/control', { x: 0, y: 0 })
-        .catch((err) => console.error('Hiba a nullázásnál:', err.message));
+      sendMessage({ x: 0, y: 0 });
     });
 
     joystickInstanceRef.current = joystick;

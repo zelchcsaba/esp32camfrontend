@@ -5,6 +5,7 @@ import JoysticTwo from './components/JoystickTwo';
 import ImageStreamHalf from './components/ImageStreamHalf';
 import ImageStreamUp from './components/ImageStreamUp';
 import JoystickDown from './components/JoystickDown';
+import { WSProvider } from './WsContext'; // az előbb létrehozott fájl
 
 function App() {
   const [isLandscape, setIsLandscape] = useState(false);
@@ -55,9 +56,11 @@ if (isMobile && isLandscape) {
 }
 
 return (
-  <body className="w-screen h-screen bg-gray-800 text-white">
-    {content}
-  </body>
+  <WSProvider>
+      <main className="w-screen h-screen bg-gray-800 text-white">
+        {content}
+      </main>
+    </WSProvider>
 );
 }
 

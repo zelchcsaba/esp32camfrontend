@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
-import axios from 'axios';
+import { useWS } from '../WsContext'; // helyes útvonalat állítsd be
 
 const JoystickTwo = () => {
   const joystickRef1 = useRef<HTMLDivElement>(null);
@@ -8,9 +8,13 @@ const JoystickTwo = () => {
   const joystick1Instance = useRef<any>(null);
   const joystick2Instance = useRef<any>(null);
   const coords = useRef({ x: 0, y: 0 });
+  const { sendMessage } = useWS();
+
+  const sendCoords = () => {
+    sendMessage({ x: coords.current.x, y: coords.current.y });
+  };
 
   const createJoysticks = () => {
-    // Törlés, ha már léteznek joystickok
     if (joystick1Instance.current) {
       joystick1Instance.current.destroy();
       joystick1Instance.current = null;
@@ -35,22 +39,12 @@ const JoystickTwo = () => {
       joystick1.on('move', (_evt, data) => {
         if (!data?.vector) return;
         coords.current.y = parseFloat((data.vector.y || 0).toFixed(2));
-        axios
-          .post('http://192.168.0.104:3000/control', {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick1 hiba:', err.message));
+        sendCoords();
       });
 
       joystick1.on('end', () => {
         coords.current.y = 0;
-        axios
-          .post('http://192.168.0.104:3000/control', {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick1 nullázás hiba:', err.message));
+        sendCoords();
       });
 
       joystick1Instance.current = joystick1;
@@ -68,22 +62,12 @@ const JoystickTwo = () => {
       joystick2.on('move', (_evt, data) => {
         if (!data?.vector) return;
         coords.current.x = parseFloat((data.vector.x || 0).toFixed(2));
-        axios
-          .post('http://192.168.0.104:3000/control', {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick2 hiba:', err.message));
+        sendCoords();
       });
 
       joystick2.on('end', () => {
         coords.current.x = 0;
-        axios
-          .post('http://192.168.0.104:3000/control', {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick2 nullázás hiba:', err.message));
+        sendCoords();
       });
 
       joystick2Instance.current = joystick2;
