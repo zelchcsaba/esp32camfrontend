@@ -2,8 +2,6 @@ import { useEffect, useRef } from 'react';
 import nipplejs from 'nipplejs';
 import { useWS } from '../WsContext'; // helyes útvonalat állítsd be
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const JoystickTwo = () => {
   const joystickRef1 = useRef<HTMLDivElement>(null);
   const joystickRef2 = useRef<HTMLDivElement>(null);
@@ -41,30 +39,12 @@ const JoystickTwo = () => {
       joystick1.on('move', (_evt, data) => {
         if (!data?.vector) return;
         coords.current.y = parseFloat((data.vector.y || 0).toFixed(2));
-<<<<<<< HEAD
         sendCoords();
-=======
-        axios
-          .post(`${apiUrl}/control`, {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick1 hiba:', err.message));
->>>>>>> master
       });
 
       joystick1.on('end', () => {
         coords.current.y = 0;
-<<<<<<< HEAD
         sendCoords();
-=======
-        axios
-          .post(`${apiUrl}/control`, {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick1 nullázás hiba:', err.message));
->>>>>>> master
       });
 
       joystick1Instance.current = joystick1;
@@ -82,30 +62,12 @@ const JoystickTwo = () => {
       joystick2.on('move', (_evt, data) => {
         if (!data?.vector) return;
         coords.current.x = parseFloat((data.vector.x || 0).toFixed(2));
-<<<<<<< HEAD
         sendCoords();
-=======
-        axios
-          .post(`${apiUrl}/control`, {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick2 hiba:', err.message));
->>>>>>> master
       });
 
       joystick2.on('end', () => {
         coords.current.x = 0;
-<<<<<<< HEAD
         sendCoords();
-=======
-        axios
-          .post(`${apiUrl}/control`, {
-            x: coords.current.x,
-            y: coords.current.y,
-          })
-          .catch((err) => console.error('Joystick2 nullázás hiba:', err.message));
->>>>>>> master
       });
 
       joystick2Instance.current = joystick2;

@@ -1,15 +1,4 @@
-<<<<<<< HEAD
 import { useWS } from '../WsContext';
-=======
-import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
-
-const apiUrl = import.meta.env.VITE_API_URL;
-
-const socket = io(apiUrl, {
-  transports: ['websocket'],
-});
->>>>>>> master
 
 export default function ImageStream() {
   const { imageData } = useWS();
