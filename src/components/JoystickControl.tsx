@@ -60,7 +60,7 @@ const JoystickControl = () => {
   }, []);
 
   return (
-    <div className="w-1/2 h-screen bg-gray-800 flex items-center justify-center">
+    <div className="w-1/2 h-14/15 fixed top-0 left-0 bg-gray-800 flex items-center justify-center select-none">
       <div
         ref={joystickRef}
         className="w-2/3 h-auto aspect-square bg-gray-600 rounded-full"

@@ -6,6 +6,7 @@ import ImageStreamHalf from './components/ImageStreamHalf';
 import ImageStreamUp from './components/ImageStreamUp';
 import JoystickDown from './components/JoystickDown';
 import { WSProvider } from './WsContext'; // az előbb létrehozott fájl
+import SliderBar from './components/SliderBar';
 
 function App() {
   const [isLandscape, setIsLandscape] = useState(false);
@@ -35,14 +36,16 @@ if (isMobile && isLandscape) {
     <div className="flex w-screen h-screen overflow-hidden bg-gray-800">
       <ImageStream />
       <JoysticTwo />
+      <SliderBar />
     </div>
   );
 } else if (!isMobile && isLandscape) {
   // Asztali + fekvő mód: csak joystick
   content = (
     <div className="flex w-screen h-screen overflow-hidden bg-gray-800">
-      <JoystickControl />
-      <ImageStreamHalf />
+      <JoystickControl/>
+      <ImageStreamHalf/>
+      <SliderBar />
     </div>
   );
 } else {
@@ -51,6 +54,7 @@ if (isMobile && isLandscape) {
     <div className="flex w-screen h-screen overflow-hidden bg-gray-800 flex-col">
       <ImageStreamUp />
       <JoystickDown />
+      <SliderBar/>
     </div>
   );
 }

@@ -16,7 +16,7 @@ const JoystickDown = () => {
     }
 
     const screenHeight = window.innerHeight;
-    const joystickSize = screenHeight * 0.32;
+    const joystickSize = screenHeight * 0.28;
 
     const joystick = nipplejs.create({
       zone: joystickRef.current,
@@ -59,7 +59,7 @@ const JoystickDown = () => {
   }, []);
 
   return (
-    <div className="w-screen h-1/2 bg-gray-800 flex items-center justify-center">
+    <div className="w-screen h-7/15 fixed bottom-10 left-0 bg-gray-800 flex items-center justify-center select-none">
       <div
         ref={joystickRef}
         className="w-auto h-2/3 aspect-square bg-gray-600 rounded-full"

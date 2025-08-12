@@ -25,7 +25,7 @@ const JoystickTwo = () => {
     }
 
     const screenWidth = window.innerWidth;
-    const joystickSize = screenWidth * 0.15;
+    const joystickSize = screenWidth * 0.21;
 
     if (joystickRef1.current) {
       const joystick1 = nipplejs.create({
@@ -91,18 +91,18 @@ const JoystickTwo = () => {
   }, []);
 
   return (
-    <div className="flex w-screen h-screen">
-      <div className="fixed left-0 top-0 h-screen w-1/4 bg-gray-800 flex items-center justify-center">
+    <div className="flex w-screen h-screen select-none">
+      <div className="fixed left-0 top-0 h-14/15 w-1/4 bg-gray-800 flex items-center justify-center">
         <div
           ref={joystickRef1}
-          className="w-2/3 h-auto aspect-square bg-gray-600 rounded-full"
+          className="w-11/12 h-auto aspect-square bg-gray-600 rounded-full"
           style={{ position: 'relative' }}
         />
       </div>
-      <div className="fixed right-0 top-0 h-screen w-1/4 bg-gray-800 flex items-center justify-center">
+      <div className="fixed right-0 top-0 h-14/15 w-1/4 bg-gray-800 flex items-center justify-center">
         <div
           ref={joystickRef2}
-          className="w-2/3 h-auto aspect-square bg-gray-600 rounded-full"
+          className="w-11/12 h-auto aspect-square bg-gray-600 rounded-full"
           style={{ position: 'relative' }}
         />
       </div>
